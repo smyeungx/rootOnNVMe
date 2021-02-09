@@ -3,12 +3,12 @@
 SD_DEV="/dev/mmcblk0p1"
 NVME_DEV="/dev/nvme0n1p1"
 
-# Check SD card and NVME mountpoint
+# Check existing SD card and NVME SSD mountpoint
 SD_MOUNTPOINT=$(findmnt /dev/mmcblk0p1  --output=target -n)
 NVME_MOUNTPOINT=$(findmnt /dev/nvme0n1p1 --output=target -n)
 
 # If SD card is mounted as / and NVME SSD is not mounted
-# sync SD card to NVME SSD
+# sync SD card -> NVME SSD
 if [ ${SD_MOUNTPOINT} == "/" ] && [ -z "$NVME_MOUNTPOINT" ]; then
 	echo "rsync SD card to NVME SSD"
 	# Mount the SSD as /mnt
@@ -21,7 +21,7 @@ if [ ${SD_MOUNTPOINT} == "/" ] && [ -z "$NVME_MOUNTPOINT" ]; then
 fi
 
 # If NVME SSD is mounted as / and SD card mounted 
-# sync NVME SSD to SD card
+# sync NVME SSD -> SD card
 if [ ${NVME_MOUNTPOINT} == "/" ]; then
 	echo "rsync NVME SSD to SD card"
 	# If SD card is not mounted, mount it
