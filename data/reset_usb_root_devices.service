@@ -1,0 +1,9 @@
+[Unit]
+Description=Reset USB Bus
+After=network.target auditd.service
+
+[Service]
+ExecStart=/sbin/reset-usb-root-deivces.sh
+
+[Install]
+WantedBy=multi-user.target
